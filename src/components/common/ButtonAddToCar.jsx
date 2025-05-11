@@ -3,13 +3,14 @@ import Button from "./Button";
 import toast from "react-hot-toast";
 
 function ButtonAddToCart({ id, count = 1 }) {
-  const { addToLocal, checkAddedItem } = useCart();
+  const { handleActions, checkAddedItem } = useCart();
   const isInCart = checkAddedItem(id);
 
   return (
     <Button
       onClick={() => {
-        if (!isInCart) addToLocal(id, count);
+        if (!isInCart)
+          handleActions({ action: "addItem", productId: id, count });
         toast.success("Added to cart");
       }}
       color={isInCart ? "bg-gray-700" : "bg-blue-800"}

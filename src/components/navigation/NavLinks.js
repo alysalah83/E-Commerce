@@ -23,7 +23,7 @@ function NavLinks() {
   ];
 
   return (
-    <menu className="flex justify-center gap-7 text-xl font-bold text-slate-600 lg:gap-12 lg:text-[22px]">
+    <menu className="flex justify-center gap-5 text-lg font-semibold text-gray-700 lg:gap-10 lg:text-xl">
       {links.map(({ href, label }) => (
         <NavLink href={href} label={label} key={href} />
       ))}

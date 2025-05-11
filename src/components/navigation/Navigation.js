@@ -20,7 +20,7 @@ function Navigation() {
           <NavLinks />
         </div>
 
-        <div className="flex justify-center gap-7 md:gap-10 md:border-t md:border-gray-300 md:py-5 lg:col-start-3 lg:row-start-1 lg:items-center lg:border-0">
+        <div className="ml-4 flex justify-center gap-7 md:gap-10 md:border-t md:border-gray-300 md:py-5 lg:col-start-3 lg:row-start-1 lg:items-center lg:border-0">
           <SignInButton />
           <CartNavButton />
           <WhitelistNavBtn />

@@ -19,7 +19,7 @@ import {
 const createHybridStorageContext = (ContextName) => {
   const HybridContext = createContext(null);
 
-  function HybridProvider({ children, key, session }) {
+  function HybridProvider({ children, localKey: key, session }) {
     const [itemsLocal, setItemsLocal] = useState([]);
     const [showPanel, setShowPanel] = useState(false);
 
