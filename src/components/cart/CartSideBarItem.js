@@ -5,7 +5,7 @@ import ButtonDelete from "../common/ButtonDelete";
 
 function CartSideBarItem({ item }) {
   const { id, image, title, price } = item;
-  const { removeFromLocal, getItemCount } = useCart();
+  const { handleActions, getItemCount } = useCart();
 
   const count = getItemCount(id);
 
@@ -32,7 +32,9 @@ function CartSideBarItem({ item }) {
           ${price}
         </span>
       </div>
-      <ButtonDelete onRemove={() => removeFromLocal(id)} />
+      <ButtonDelete
+        onRemove={() => handleActions({ action: "removeItem", productId: id })}
+      />
     </li>
   );
 }

@@ -14,8 +14,7 @@ function Cart() {
     itemsCount,
     itemsBalance,
     getItemCount,
-    removeFromLocal,
-    updateCount,
+    handleActions,
   } = useCart();
 
   if (isPending) return <Loader />;
@@ -28,8 +27,7 @@ function Cart() {
             <div className="overflow-x-auto rounded-lg bg-white px-8 py-5 shadow-md">
               <Table
                 items={items}
-                removeFromLocal={removeFromLocal}
-                updateCount={updateCount}
+                handleActions={handleActions}
                 getItemCount={getItemCount}
                 withCount={true}
               />

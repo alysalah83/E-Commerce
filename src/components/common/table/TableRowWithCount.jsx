@@ -7,8 +7,7 @@ import ProductPurchaseCount from "@/src/components/product page/ProductPurchaseC
 function TableRowWithCount({
   tableRowClass,
   item,
-  removeFromLocal,
-  updateCount,
+  handleActions,
   getItemCount,
 }) {
   const { id, image, title, price, stock } = item;
@@ -19,7 +18,7 @@ function TableRowWithCount({
 
   const handleCountChange = function (newCount) {
     setCount(newCount);
-    updateCount(id, newCount);
+    handleActions({ action: "updateItem", productId: id, count: newCount });
   };
 
   return (
@@ -49,7 +48,11 @@ function TableRowWithCount({
       </div>
       <div className={priceClasses}>${subtotalPrice}</div>
       <div className="self-center">
-        <ButtonDelete onRemove={() => removeFromLocal(id)} />
+        <ButtonDelete
+          onRemove={() =>
+            handleActions({ action: "removeItem", productId: id })
+          }
+        />
       </div>
     </div>
   );

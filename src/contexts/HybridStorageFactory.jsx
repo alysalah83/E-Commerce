@@ -9,19 +9,17 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   getProductsByIds,
   getUserProducts,
   updateUserCartOrWhitelist,
-  UserProductCount,
 } from "../lib/data-service";
 
 const createHybridStorageContext = (ContextName) => {
   const HybridContext = createContext(null);
 
-  function HybridProvider({ children, localKey, session }) {
-    const queryClient = useQueryClient();
+  function HybridProvider({ children, key, session }) {
     const [itemsLocal, setItemsLocal] = useState([]);
     const [showPanel, setShowPanel] = useState(false);
 
@@ -34,7 +32,7 @@ const createHybridStorageContext = (ContextName) => {
         if (session)
           return getUserProducts({
             email: session.user.email,
-            key: localKey,
+            key,
           });
         else return getProductsByIds(itemsLocal);
       },
@@ -43,29 +41,27 @@ const createHybridStorageContext = (ContextName) => {
     });
 
     useEffect(() => {
-      const storedItems = localStorage.getItem(localKey);
+      const storedItems = localStorage.getItem(key);
       setItemsLocal(storedItems ? JSON.parse(storedItems) : []);
-    }, [localKey]);
+    }, [key]);
 
-    //for sync the state with localStorage on every state change
     useEffect(() => {
       if (
         itemsLocal?.length > 0 ||
-        JSON.parse(localStorage.getItem(localKey))?.length === 1
+        JSON.parse(localStorage.getItem(key))?.length === 1
       )
-        localStorage.setItem(localKey, JSON.stringify(itemsLocal));
-    }, [itemsLocal, localKey]);
+        localStorage.setItem(key, JSON.stringify(itemsLocal));
+    }, [itemsLocal, key]);
 
-    //for sync the localStorage with state on every localstorage change
     useEffect(() => {
       const handelStorage = function (e) {
-        if (e.key === localKey) setItemsLocal(JSON.parse(e.newValue) || []);
+        if (e.key === key) setItemsLocal(JSON.parse(e.newValue) || []);
       };
 
       window.addEventListener("storage", handelStorage);
 
       return () => window.removeEventListener("storage", handelStorage);
-    }, [itemsLocal, localKey]);
+    }, [itemsLocal, key]);
 
     useEffect(() => {
       if (!session || itemsLocal.length === 0) return;
@@ -73,69 +69,82 @@ const createHybridStorageContext = (ContextName) => {
       const syncWithServer = async () => {
         await updateUserCartOrWhitelist({
           email: session.user.email,
-          key: localKey,
+          key,
           items: itemsLocal,
-          action: "merge",
+          action: "mergeItems",
         });
         setItemsLocal([]);
       };
 
       syncWithServer();
-    }, [session?.user?.email, localKey, itemsLocal]);
+    }, [session?.user?.email, key, itemsLocal]);
 
     const handleTogglePanel = useCallback(
       () => setShowPanel((cur) => !cur),
       [],
     );
 
-    const addToLocal = useCallback(
-      (productId, count = 1) => {
-        if (session) {
-          const addToServer = async () => {
-            await updateUserCartOrWhitelist({
-              items: { id: productId, count },
-              email: session.user.email,
-              key: localKey,
-              action: "add",
-            });
-            refetch();
-          };
+    const handleActions = useCallback(
+      function ({ action, productId, count = 1 }) {
+        const isAuth = !!session.user.email;
+        const payLoad = {
+          item: { id: productId, count },
+          email: session.user.email,
+          key,
+          action,
+        };
 
-          addToServer();
-        } else
-          setItemsLocal((currentItems) => {
-            if (currentItems.some((item) => item.id === productId))
-              return currentItems;
+        switch (action) {
+          case "addItem":
+            if (isAuth) {
+              const addToServer = async () => {
+                await updateUserCartOrWhitelist(payLoad);
+                refetch();
+              };
+              addToServer();
+            } else
+              setItemsLocal((currentItems) => {
+                if (currentItems.some((item) => item.id === productId))
+                  return currentItems;
 
-            return [...currentItems, { id: productId, count }];
-          });
+                return [...currentItems, { id: productId, count }];
+              });
+            break;
+          case "updateItem":
+            if (isAuth) {
+              const updateServer = async () => {
+                await updateUserCartOrWhitelist(payLoad);
+                refetch();
+              };
+              updateServer();
+            } else
+              setItemsLocal((curCart) =>
+                curCart.map((item) =>
+                  item.id === productId ? { ...item, count } : item,
+                ),
+              );
+            break;
+          case "removeItem":
+            if (session) {
+              const removeFromServer = async () => {
+                await updateUserCartOrWhitelist(payLoad);
+                refetch();
+              };
+              removeFromServer();
+            } else
+              setItemsLocal((currentItems) => {
+                const newItems = currentItems.filter(
+                  (item) => item.id !== productId,
+                );
+                return newItems;
+              });
+            break;
+          default: {
+            throw new Error("inValid action");
+          }
+        }
       },
-      [session, queryClient, localKey],
-    );
-
-    const removeFromLocal = useCallback(
-      (productId) => {
-        if (session) {
-          const removeFromServer = async () => {
-            await updateUserCartOrWhitelist({
-              items: { id: productId },
-              email: session.user.email,
-              key: localKey,
-              action: "remove",
-            });
-            refetch();
-          };
-
-          removeFromServer();
-        } else
-          setItemsLocal((currentItems) => {
-            const newItems = currentItems.filter(
-              (item) => item.id !== productId,
-            );
-            return newItems;
-          });
-      },
-      [session, queryClient, localKey],
+      [session, key, refetch],
     );
 
     const itemsCount = useMemo(() => items?.length || 0, [items]);
@@ -150,7 +159,7 @@ const createHybridStorageContext = (ContextName) => {
     const getItemCount = useCallback(
       (productId) => {
         if (session)
-          return items?.find((item) => item.id === productId)?.count || 1;
+          return items.find((item) => item.id === productId)?.count || 1;
         else
           return itemsLocal.find((item) => item.id === productId)?.count || 1;
       },
@@ -164,37 +173,14 @@ const createHybridStorageContext = (ContextName) => {
           : Math.round(
               items?.reduce((acc, cur) => {
                 const count = getItemCount(cur.id);
+                console.log(count);
                 return acc + cur.price * count;
               }, 0),
             ) || 0,
       [items, getItemCount],
     );
 
-    const updateCount = useCallback(
-      (productId, count) => {
-        if (session) {
-          const updateServer = async () => {
-            await updateUserCartOrWhitelist({
-              items: { id: productId, count },
-              email: session.user.email,
-              key: localKey,
-              action: "update",
-            });
-            refetch();
-          };
-
-          updateServer();
-        } else
-          setItemsLocal((curCart) =>
-            curCart.map((item) =>
-              item.id === productId ? { ...item, count } : item,
-            ),
-          );
-      },
-      [session, queryClient, localKey],
-    );
-
-    console.log(`${localKey}Provider-re-rendered`);
+    console.log(`${key}Provider-re-rendered`);
 
     const contextValue = useMemo(
       () => ({
@@ -203,10 +189,8 @@ const createHybridStorageContext = (ContextName) => {
         itemsLocal,
         itemsCount,
         itemsBalance,
-        addToLocal,
+        handleActions,
         getItemCount,
-        updateCount,
-        removeFromLocal,
         checkAddedItem,
         showPanel,
         handleTogglePanel,
@@ -217,10 +201,8 @@ const createHybridStorageContext = (ContextName) => {
         itemsLocal,
         itemsCount,
         itemsBalance,
-        addToLocal,
+        handleActions,
         getItemCount,
-        updateCount,
-        removeFromLocal,
         checkAddedItem,
         showPanel,
         handleTogglePanel,

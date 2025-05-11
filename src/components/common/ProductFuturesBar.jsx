@@ -10,7 +10,7 @@ import ProductMiniPanel from "../product page/ProductMiniPanel";
 
 function ProductFuturesBar({ product }) {
   const productId = product.id;
-  const { checkAddedItem, addToLocal } = useCart();
+  const { checkAddedItem, handleActions } = useCart();
   const [showPanel, setShowPanel] = useState(false);
   const handleTogglePanel = () => setShowPanel((cur) => !cur);
 
@@ -34,7 +34,7 @@ function ProductFuturesBar({ product }) {
           onClick={(e) => {
             if (!isInCart) {
               e.stopPropagation();
-              addToLocal(productId);
+              handleActions({ action: "addItem", productId });
               toast.success("Added to Cart");
             }
           }}

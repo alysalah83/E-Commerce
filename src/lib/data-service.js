@@ -392,12 +392,7 @@ export async function getUserById(userId) {
   return data;
 }
 
-export async function updateUserCartOrWhitelist({
-  email,
-  items: newItems,
-  key,
-  action,
-}) {
+export async function getUserCartOrWhitelist({ email, key }) {
   const { data, error: fetchError } = await supabase
     .from("users")
     .select(key)
@@ -409,38 +404,46 @@ export async function updateUserCartOrWhitelist({
     throw new Error(`Could not fetch user ${key}`);
   }
 
-  const curItems = data[key] || [];
+  return data[key] || [];
+}
+
+export async function updateUserCartOrWhitelist({
+  email,
+  item: newItem,
+  items: newItems,
+  key,
+  action,
+}) {
+  const curItems = await getUserCartOrWhitelist({ email, key });
 
   let updatedItems;
 
   switch (action) {
-    case "merge":
+    case "mergeItems":
       updatedItems = [
         ...curItems,
         ...newItems.filter(
-          (newItem) => !curItems.some((curItem) => curItem.id === newItem.id),
+          (item) => !curItems.some((curItem) => curItem.id === item.id),
         ),
       ];
       break;
-    case "add":
-      const isAdded = curItems.some((curItem) => curItem.id === newItems.id);
-      updatedItems = isAdded ? [...curItems] : [...curItems, newItems];
+    case "addItem":
+      const isAdded = curItems.some((curItem) => curItem.id === newItem.id);
+      updatedItems = isAdded ? [...curItems] : [...curItems, newItem];
       break;
-    case "update":
+    case "updateItem":
       updatedItems = curItems.map((item) =>
-        item.id === newItems.id
-          ? { id: newItems.id, count: newItems.count }
+        item.id === newItem.id
+          ? { id: newItem.id, count: newItem.count }
           : item,
       );
       break;
-    case "remove":
-      updatedItems = curItems.filter((curItem) => curItem.id !== newItems.id);
+    case "removeItem":
+      updatedItems = curItems.filter((curItem) => curItem.id !== newItem.id);
       break;
     default:
       throw new Error("invalid action");
   }
-
-  console.log(curItems, newItems, updatedItems);
 
   const { data: updatedData, error } = await supabase
     .from("users")
@@ -472,20 +475,13 @@ export async function getUserProducts({ email, key }) {
   console.log(itemsArr);
 
   if (itemsArr.length === 0 || !itemsArr) return [];
-  const items = await getProductsByIds(itemsArr);
+  const items = (await getProductsByIds(itemsArr)) || [];
 
-  return items || [];
-}
+  const itemsWithCount = items?.map((item) => {
+    const itemCount =
+      itemsArr.find((itemObj) => itemObj.id === item.id)?.count || 1;
+    return { ...item, count: itemCount };
+  });
 
-export async function UserProductCount({ email, id, key }) {
-  const { data, error } = await supabase
-    .from("users")
-    .select(key)
-    .eq("email", email)
-    .single();
-
-  if (error) throw new Error("Failed to fetch user data");
-
-  const item = data[key]?.find((item) => item.id === id);
-  return item?.count || 1;
+  return itemsWithCount || [];
 }

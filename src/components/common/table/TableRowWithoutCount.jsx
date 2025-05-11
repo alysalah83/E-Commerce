@@ -4,14 +4,19 @@ import Link from "next/link";
 import StockLabel from "../StockLabel";
 import ButtonAddToCart from "../ButtonAddToCar";
 
-function TableRowWithoutCount({ item, tableRowClass, removeFromLocal }) {
+function TableRowWithoutCount({ item, tableRowClass, handleActions }) {
   const { id, image, title, price, stock } = item;
   const priceClasses = "self-center font-semibold tracking-wide text-lg";
 
   return (
     <div className={`${tableRowClass} text-gray-600 last:border-0`}>
       <div className="self-center">
-        <ButtonDelete icon="remove" onRemove={() => removeFromLocal(id)} />
+        <ButtonDelete
+          icon="remove"
+          onRemove={() =>
+            handleActions({ action: "removeItem", productId: id })
+          }
+        />
       </div>
       <div className="flex items-center gap-5">
         <div className="h-24 w-24 rounded-md bg-gray-100">

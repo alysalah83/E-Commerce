@@ -1,13 +1,7 @@
 import TableRowWithCount from "./TableRowWithCount";
 import TableRowWithoutCount from "./TableRowWithoutCount";
 
-function Table({
-  items,
-  getItemCount,
-  updateCount,
-  removeFromLocal,
-  withCount = false,
-}) {
+function Table({ items, getItemCount, handleActions, withCount = false }) {
   const tableRowClass = `grid ${withCount ? "grid-cols-[4fr_1fr_2fr_1fr_0.5fr]" : "grid-cols-[0.5fr_4fr_1fr_1.5fr_1.5fr]"}  min-w-4xl py-5 border-b border-gray-200`;
   return (
     <>
@@ -37,8 +31,7 @@ function Table({
           <TableRowWithCount
             item={item}
             tableRowClass={tableRowClass}
-            removeFromLocal={removeFromLocal}
-            updateCount={updateCount}
+            handleActions={handleActions}
             getItemCount={getItemCount}
             key={item.id}
           />
@@ -46,7 +39,7 @@ function Table({
           <TableRowWithoutCount
             item={item}
             tableRowClass={tableRowClass}
-            removeFromLocal={removeFromLocal}
+            handleActions={handleActions}
             key={item.id}
           />
         ),
