@@ -1,6 +1,6 @@
 function FormInput({ label, name, isPending, type, placeholder }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <label htmlFor={label} className="w-fit font-medium">
         {label}
       </label>
