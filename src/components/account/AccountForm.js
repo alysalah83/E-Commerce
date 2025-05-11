@@ -14,7 +14,8 @@ import FormStateMessage from "../common/FormStateMessage";
 function AccountForm({ session, userData }) {
   const updateUserWithUserId = updateUser.bind(null, session.user.email);
   const [state, action, isPending] = useActionState(updateUserWithUserId, null);
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState(userData.address || "");
+  const [fullName, setFullName] = useState(userData.fullName);
   const [isLoading, setIsloading] = useState(false);
   const [disableForm, setDisableForm] = useState(false);
 
@@ -45,14 +46,17 @@ function AccountForm({ session, userData }) {
   return (
     <form action={action}>
       <FormInputGroup
-        defaultValue={userData.fullName}
+        value={fullName}
+        onChange={(e) => {
+          setFullName(e.target.value);
+        }}
         label="Full Name"
         name="fullName"
         inputType="text"
         disabled={isPending || disableForm}
       />
       <FormInputGroup
-        defaultValue={userData.email}
+        value={userData.email}
         label="Email"
         name="email"
         inputType="email"
@@ -60,7 +64,10 @@ function AccountForm({ session, userData }) {
       />
       <div className="relative mb-2">
         <FormInputGroup
-          defaultValue={userData.address || address}
+          value={address}
+          onChange={(e) => {
+            setAddress(e.target.value);
+          }}
           label="Address"
           name="address"
           inputType="text"
@@ -80,7 +87,7 @@ function AccountForm({ session, userData }) {
         Click the location button to get your address
       </p>
       <div className="mb-4 flex items-center gap-6">
-        <Button disabled={disableForm}>Update Setting</Button>
+        <Button disabled={disableForm || isPending}>Update Setting</Button>
         <button
           onClick={(e) => {
             setDisableForm(true);

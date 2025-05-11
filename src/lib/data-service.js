@@ -1,4 +1,4 @@
-import toast from "react-hot-toast";
+import { sub } from "date-fns";
 import {
   HIGHEST_DISCOUNT_RANGE_FROM,
   HIGHEST_DISCOUNT_RANGE_TO,
@@ -390,4 +390,102 @@ export async function getUserById(userId) {
   }
 
   return data;
+}
+
+export async function updateUserCartOrWhitelist({
+  email,
+  items: newItems,
+  key,
+  action,
+}) {
+  const { data, error: fetchError } = await supabase
+    .from("users")
+    .select(key)
+    .eq("email", email)
+    .single();
+
+  if (fetchError) {
+    console.error(fetchError);
+    throw new Error(`Could not fetch user ${key}`);
+  }
+
+  const curItems = data[key] || [];
+
+  let updatedItems;
+
+  switch (action) {
+    case "merge":
+      updatedItems = [
+        ...curItems,
+        ...newItems.filter(
+          (newItem) => !curItems.some((curItem) => curItem.id === newItem.id),
+        ),
+      ];
+      break;
+    case "add":
+      const isAdded = curItems.some((curItem) => curItem.id === newItems.id);
+      updatedItems = isAdded ? [...curItems] : [...curItems, newItems];
+      break;
+    case "update":
+      updatedItems = curItems.map((item) =>
+        item.id === newItems.id
+          ? { id: newItems.id, count: newItems.count }
+          : item,
+      );
+      break;
+    case "remove":
+      updatedItems = curItems.filter((curItem) => curItem.id !== newItems.id);
+      break;
+    default:
+      throw new Error("invalid action");
+  }
+
+  console.log(curItems, newItems, updatedItems);
+
+  const { data: updatedData, error } = await supabase
+    .from("users")
+    .update({ [key]: updatedItems })
+    .eq("email", email)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`couldn't update the ${key}`);
+  }
+
+  return updatedData;
+}
+
+export async function getUserProducts({ email, key }) {
+  const { data, error: fetchError } = await supabase
+    .from("users")
+    .select(key)
+    .eq("email", email)
+    .single();
+
+  if (fetchError) {
+    console.error(fetchError);
+    throw new Error(`Could not fetch user ${key}`);
+  }
+
+  const itemsArr = data[key] || [];
+  console.log(itemsArr);
+
+  if (itemsArr.length === 0 || !itemsArr) return [];
+  const items = await getProductsByIds(itemsArr);
+
+  return items || [];
+}
+
+export async function UserProductCount({ email, id, key }) {
+  const { data, error } = await supabase
+    .from("users")
+    .select(key)
+    .eq("email", email)
+    .single();
+
+  if (error) throw new Error("Failed to fetch user data");
+
+  const item = data[key]?.find((item) => item.id === id);
+  return item?.count || 1;
 }

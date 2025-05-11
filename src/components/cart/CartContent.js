@@ -1,3 +1,5 @@
+"use client";
+
 import Loader from "../common/Loader";
 import CartSideBarItem from "./CartSideBarItem";
 import { useCart } from "@/src/contexts/HybridStorageFactory";

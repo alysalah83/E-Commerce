@@ -3,8 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { addReview as addReviewApi } from "./data-service";
 import { auth, signIn, signOut } from "../auth";
-import { formatDate } from "date-fns";
 import { updateUser as updateUserApi } from "./data-service";
+import { update } from "../auth";
 
 export async function addReview(productId, rating, prevState, formData) {
   const comment = formData.get("comment");
@@ -97,6 +97,8 @@ export async function updateUser(email, prevState, formData) {
   const state = await updateUserApi({ fullName, address, email });
 
   if (!state.success) return state;
+
+  revalidatePath("/");
 
   return { success: true, message: "setting has been updated" };
 }

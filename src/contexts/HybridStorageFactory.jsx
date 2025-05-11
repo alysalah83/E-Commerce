@@ -9,62 +9,43 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getProductsByIds } from "../lib/data-service";
-
-// factory function to generate contexts that use local storage to set array of object inside it
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getProductsByIds,
+  getUserProducts,
+  updateUserCartOrWhitelist,
+  UserProductCount,
+} from "../lib/data-service";
 
 const createHybridStorageContext = (ContextName) => {
   const HybridContext = createContext(null);
 
-  function HybridProvider({ children, localKey }) {
+  function HybridProvider({ children, localKey, session }) {
+    const queryClient = useQueryClient();
     const [itemsLocal, setItemsLocal] = useState([]);
     const [showPanel, setShowPanel] = useState(false);
 
-    const { data: items, isPending } = useQuery({
-      queryFn: () => getProductsByIds(itemsLocal),
-      queryKey: [
-        `${ContextName}Products`,
-        { ids: itemsLocal.map((item) => item.id).toSorted() },
-      ],
+    const {
+      data: items,
+      isPending,
+      refetch,
+    } = useQuery({
+      queryFn: () => {
+        if (session)
+          return getUserProducts({
+            email: session.user.email,
+            key: localKey,
+          });
+        else return getProductsByIds(itemsLocal);
+      },
+      queryKey: [session?.user.email, `${ContextName}Products`, itemsLocal],
       staleTime: 60 * 60 * 1000,
     });
 
     useEffect(() => {
       const storedItems = localStorage.getItem(localKey);
       setItemsLocal(storedItems ? JSON.parse(storedItems) : []);
-    }, []);
-
-    const handleTogglePanel = useCallback(
-      () => setShowPanel((cur) => !cur),
-      [],
-    );
-
-    const addToLocal = useCallback((productId, count = 1) => {
-      setItemsLocal((currentItems) => {
-        if (currentItems.some((item) => item.id === productId))
-          return currentItems;
-
-        return [...currentItems, { id: productId, count }];
-      });
-    }, []);
-
-    const removeFromLocal = useCallback((productId) => {
-      setItemsLocal((currentItems) => {
-        const newItems = currentItems.filter((item) => item.id !== productId);
-
-        return newItems;
-      });
-    }, []);
-
-    const itemsCount = useMemo(() => items?.length || 0, [items]);
-
-    const checkAddedItem = useCallback(
-      (productId) => {
-        return items?.some((item) => item.id === productId);
-      },
-      [items],
-    );
+    }, [localKey]);
 
     //for sync the state with localStorage on every state change
     useEffect(() => {
@@ -73,7 +54,7 @@ const createHybridStorageContext = (ContextName) => {
         JSON.parse(localStorage.getItem(localKey))?.length === 1
       )
         localStorage.setItem(localKey, JSON.stringify(itemsLocal));
-    }, [itemsLocal]);
+    }, [itemsLocal, localKey]);
 
     //for sync the localStorage with state on every localstorage change
     useEffect(() => {
@@ -86,10 +67,94 @@ const createHybridStorageContext = (ContextName) => {
       return () => window.removeEventListener("storage", handelStorage);
     }, [itemsLocal, localKey]);
 
+    useEffect(() => {
+      if (!session || itemsLocal.length === 0) return;
+
+      const syncWithServer = async () => {
+        await updateUserCartOrWhitelist({
+          email: session.user.email,
+          key: localKey,
+          items: itemsLocal,
+          action: "merge",
+        });
+        setItemsLocal([]);
+      };
+
+      syncWithServer();
+    }, [session?.user?.email, localKey, itemsLocal]);
+
+    const handleTogglePanel = useCallback(
+      () => setShowPanel((cur) => !cur),
+      [],
+    );
+
+    const addToLocal = useCallback(
+      (productId, count = 1) => {
+        if (session) {
+          const addToServer = async () => {
+            await updateUserCartOrWhitelist({
+              items: { id: productId, count },
+              email: session.user.email,
+              key: localKey,
+              action: "add",
+            });
+            refetch();
+          };
+
+          addToServer();
+        } else
+          setItemsLocal((currentItems) => {
+            if (currentItems.some((item) => item.id === productId))
+              return currentItems;
+
+            return [...currentItems, { id: productId, count }];
+          });
+      },
+      [session, queryClient, localKey],
+    );
+
+    const removeFromLocal = useCallback(
+      (productId) => {
+        if (session) {
+          const removeFromServer = async () => {
+            await updateUserCartOrWhitelist({
+              items: { id: productId },
+              email: session.user.email,
+              key: localKey,
+              action: "remove",
+            });
+            refetch();
+          };
+
+          removeFromServer();
+        } else
+          setItemsLocal((currentItems) => {
+            const newItems = currentItems.filter(
+              (item) => item.id !== productId,
+            );
+            return newItems;
+          });
+      },
+      [session, queryClient, localKey],
+    );
+
+    const itemsCount = useMemo(() => items?.length || 0, [items]);
+
+    const checkAddedItem = useCallback(
+      (productId) => {
+        return items?.some((item) => item.id === productId);
+      },
+      [items],
+    );
+
     const getItemCount = useCallback(
-      (productId) =>
-        itemsLocal.find((item) => item.id === productId)?.count || 1,
-      [itemsLocal],
+      (productId) => {
+        if (session)
+          return items?.find((item) => item.id === productId)?.count || 1;
+        else
+          return itemsLocal.find((item) => item.id === productId)?.count || 1;
+      },
+      [itemsLocal, items, session],
     );
 
     const itemsBalance = useMemo(
@@ -98,21 +163,35 @@ const createHybridStorageContext = (ContextName) => {
           ? 0
           : Math.round(
               items?.reduce((acc, cur) => {
-                const count = Number(getItemCount(cur.id));
+                const count = getItemCount(cur.id);
                 return acc + cur.price * count;
               }, 0),
             ) || 0,
       [items, getItemCount],
     );
 
-    const updateCount = useCallback((productId, count) =>
-      setItemsLocal(
-        (curCart) =>
-          curCart.map((item) =>
-            item.id === productId ? { ...item, count } : item,
-          ),
-        [],
-      ),
+    const updateCount = useCallback(
+      (productId, count) => {
+        if (session) {
+          const updateServer = async () => {
+            await updateUserCartOrWhitelist({
+              items: { id: productId, count },
+              email: session.user.email,
+              key: localKey,
+              action: "update",
+            });
+            refetch();
+          };
+
+          updateServer();
+        } else
+          setItemsLocal((curCart) =>
+            curCart.map((item) =>
+              item.id === productId ? { ...item, count } : item,
+            ),
+          );
+      },
+      [session, queryClient, localKey],
     );
 
     console.log(`${localKey}Provider-re-rendered`);

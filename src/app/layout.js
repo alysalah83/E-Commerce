@@ -7,8 +7,10 @@ import {
 } from "../contexts/HybridStorageFactory";
 import QueryProvider from "../contexts/QueryProvider";
 import { Toaster } from "react-hot-toast";
+import { auth } from "../auth";
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth();
   return (
     <html lang="en">
       <body className="relative flex h-screen flex-col text-base text-slate-700">
@@ -26,8 +28,8 @@ export default function RootLayout({ children }) {
           }}
         />
         <QueryProvider>
-          <CartProvider localKey="cart">
-            <WhitelistProvider localKey="whitelist">
+          <CartProvider localKey="cart" session={session}>
+            <WhitelistProvider localKey="whitelist" session={session}>
               <header>
                 <div className="mx-auto max-w-7xl">
                   <Navigation />

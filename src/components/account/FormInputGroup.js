@@ -1,5 +1,6 @@
 function FormInputGroup({
-  defaultValue = "",
+  value,
+  onChange,
   label,
   name,
   inputType,
@@ -9,7 +10,8 @@ function FormInputGroup({
   return (
     <div className="relative mt-6">
       <input
-        defaultValue={defaultValue}
+        value={value}
+        onChange={onChange}
         name={name}
         type={inputType}
         required
