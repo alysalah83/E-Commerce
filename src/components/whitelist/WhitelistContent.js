@@ -7,7 +7,7 @@ import { LuFolderHeart } from "react-icons/lu";
 import Table from "../common/table/Table";
 
 function Cart() {
-  const { items, itemsCount, isPending, removeFromLocal } = useWhitelist();
+  const { items, itemsCount, isPending, handleActions } = useWhitelist();
 
   if (isPending) return <Loader />;
 
@@ -16,7 +16,7 @@ function Cart() {
       <section className="mx-auto max-w-7xl px-6 py-10 md:px-10">
         {itemsCount > 0 ? (
           <div className="overflow-x-auto rounded-lg bg-white px-8 py-5 shadow-md">
-            <Table items={items} removeFromLocal={removeFromLocal} />
+            <Table items={items} handleActions={handleActions} />
           </div>
         ) : (
           <div className="flex w-full justify-center">
