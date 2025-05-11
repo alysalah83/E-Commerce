@@ -46,10 +46,10 @@ function FooterLists() {
           </address>
         </div>
         <div>
-          <h3 className="mb-8 text-xl font-bold">Contact</h3>
+          <h3 className="mb-8 text-xl font-bold">Quick Link</h3>
           <ul className="flex flex-col gap-5 text-lg text-gray-600">
             <li className="transition-colors duration-300 hover:text-blue-600">
-              <Link href="/login">Login / Register</Link>
+              <Link href="/signIn">Login / Register</Link>
             </li>
             <li className="transition-colors duration-300 hover:text-blue-600">
               <Link href="/cart">Cart</Link>
@@ -63,7 +63,7 @@ function FooterLists() {
           </ul>
         </div>
         <div>
-          <h3 className="mb-8 text-xl font-bold">Quick Link</h3>
+          <h3 className="mb-8 text-xl font-bold">Terms of use</h3>
           <ul className="flex flex-col gap-5 text-lg text-gray-600">
             <li className="transition-colors duration-300 hover:text-blue-600">
               Privacy Polices
