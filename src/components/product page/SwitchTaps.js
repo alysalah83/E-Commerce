@@ -97,7 +97,6 @@ function TapContent({ tap, productId }) {
 }
 
 function TapReviews({ reviews, productId }) {
-  console.log(reviews);
   return (
     <div className="flex flex-col gap-4 gap-y-12 lg:flex-row">
       <div className="order-2 flex-1 lg:order-1">

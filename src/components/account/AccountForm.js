@@ -28,7 +28,6 @@ function AccountForm({ session, userData }) {
     const toastId = toast.loading("Loading Address");
     try {
       const { latitude, longitude } = await getGeoLocation();
-      console.log(latitude, longitude);
       const {
         features: [{ properties }],
       } = await getAddressInformation({ latitude, longitude });

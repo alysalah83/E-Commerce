@@ -24,7 +24,6 @@ function MainPopular({ products, productsCount }) {
       ? (productsCount % itemsPerPage) + (page - 1) * itemsPerPage
       : page * itemsPerPage;
 
-  console.log(products, productsCount, productsCountPerPage);
   return (
     <>
       <MainHeader
