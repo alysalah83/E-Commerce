@@ -5,12 +5,14 @@ import { BsPerson } from "react-icons/bs";
 
 async function SignInButton() {
   const session = await auth();
-  const isAuth = !!session?.user;
+  const isAuth = !!session?.user?.email;
   let name, image;
   if (isAuth) {
     name = session.user.name;
     image = session.user.image;
   }
+
+  console.log(isAuth);
 
   return isAuth ? (
     <Link href="/account">

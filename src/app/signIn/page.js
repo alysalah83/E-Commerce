@@ -4,8 +4,6 @@ import Image from "next/image";
 import PageHeader from "@/src/components/common/PageHeader";
 import { signInAction } from "@/src/lib/actions";
 
-export const dynamic = "force-static";
-
 export const metadata = {
   title: "sign in",
 };

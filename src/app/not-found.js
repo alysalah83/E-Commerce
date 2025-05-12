@@ -4,8 +4,6 @@ import Link from "next/link";
 import PageHeader from "../components/common/PageHeader";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-export const dynamic = "force-static";
-
 function NotFound() {
   return (
     <>

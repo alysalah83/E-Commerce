@@ -8,8 +8,6 @@ import { useState } from "react";
 import { useSearchItems } from "@/src/hooks/useSearchItems";
 import Loader from "../common/Loader";
 import Link from "next/link";
-import { TiEdit } from "react-icons/ti";
-import { notFound } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
 
 function SearchPanel({ handleToggleVisibility, visible }) {
@@ -17,8 +15,6 @@ function SearchPanel({ handleToggleVisibility, visible }) {
   const formattedQuery = searchQuery.trim();
 
   const { items, isPending, error } = useSearchItems(formattedQuery);
-
-  if (error) notFound();
 
   return (
     <>

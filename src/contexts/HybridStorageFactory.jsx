@@ -15,14 +15,16 @@ import {
   getUserProducts,
   updateUserCartOrWhitelist,
 } from "../lib/data-service";
+import { useSession } from "next-auth/react";
 
 const createHybridStorageContext = (ContextName) => {
   const HybridContext = createContext(null);
 
-  function HybridProvider({ children, localKey: key, session }) {
+  function HybridProvider({ children, localKey: key }) {
     const [itemsLocal, setItemsLocal] = useState([]);
     const [showPanel, setShowPanel] = useState(false);
-
+    const data = useSession();
+    const session = data?.data;
     const {
       data: items,
       isPending,
@@ -36,7 +38,7 @@ const createHybridStorageContext = (ContextName) => {
           });
         else return getProductsByIds(itemsLocal);
       },
-      queryKey: [session?.user.email, `${ContextName}Products`, itemsLocal],
+      queryKey: [session?.user?.email, `${ContextName}Products`, itemsLocal],
       staleTime: 60 * 60 * 1000,
     });
 

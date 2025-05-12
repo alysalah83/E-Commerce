@@ -3,8 +3,6 @@ import MainShop from "@/src/components/shop page/main content/MainShop";
 import { ProductsProvider } from "@/src/contexts/ProductsProvider";
 import PageHeader from "@/src/components/common/PageHeader";
 
-export const dynamic = "force-static";
-
 export const metadata = {
   title: "Shop",
 };

@@ -7,8 +7,6 @@ import {
   IoMailOutline,
 } from "react-icons/io5";
 
-export const dynamic = "force-static";
-
 export const metadata = {
   title: "Contact",
 };
