@@ -73,10 +73,8 @@ function SearchItem({ item, searchQuery }) {
   const { id, image, title, price, rating } = item;
 
   return (
-    <Link href={`/shop/${id}`} className="group">
-      <li
-        className={`flex w-full items-center gap-4 rounded-xl py-4 transition duration-300 hover:bg-gray-200 md:px-4`}
-      >
+    <Link href={`/shop/${id}`} className="w-full">
+      <li className="flex items-center gap-4 rounded-xl py-4 transition duration-300 hover:bg-gray-200 md:px-4">
         <div className="h-26 w-26 rounded-xl bg-gray-100 lg:h-32 lg:w-32 xl:h-40 xl:w-40">
           <div className="relative h-full w-full">
             <Image
@@ -89,7 +87,7 @@ function SearchItem({ item, searchQuery }) {
         </div>
         <div className="flex flex-col gap-2 py-6 sm:px-6">
           <h4
-            className={`cursor-pointer text-lg font-semibold transition duration-300 group-hover:text-blue-600 lg:text-2xl`}
+            className={`cursor-pointer text-lg font-semibold transition duration-300 hover:text-blue-600 lg:text-2xl`}
           >
             <HighlightedText title={title} query={searchQuery} />
           </h4>

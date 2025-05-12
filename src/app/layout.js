@@ -8,6 +8,11 @@ import {
 import QueryProvider from "../contexts/QueryProvider";
 import { Toaster } from "react-hot-toast";
 import { auth } from "../auth";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subset: ["latin"],
+});
 
 export const metadata = {
   title: {
@@ -19,7 +24,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <body className="relative flex h-screen flex-col text-base text-slate-700">
         <Toaster
           position="top-center"
