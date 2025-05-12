@@ -3,30 +3,7 @@ import Google from "next-auth/providers/google";
 import { addUser, checkEmailExists, getUserByEmail } from "./lib/data-service";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  trustHost: true,
-  debug: true,
-  providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    }),
-  ],
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
-  debug: process.env.NODE_ENV === "development",
+  providers: [Google],
   pages: {
     signIn: "/signIn",
   },
