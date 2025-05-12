@@ -298,7 +298,7 @@ export async function addReview({
     };
   }
 
-  return null;
+  return { success: true };
 }
 
 export async function getProductsByIds(cartItemsId) {

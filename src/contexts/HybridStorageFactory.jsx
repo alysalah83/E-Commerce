@@ -161,9 +161,9 @@ const createHybridStorageContext = (ContextName) => {
     const getItemCount = useCallback(
       (productId) => {
         if (session)
-          return items.find((item) => item.id === productId)?.count || 1;
+          return items?.find((item) => item.id === productId)?.count || 1;
         else
-          return itemsLocal.find((item) => item.id === productId)?.count || 1;
+          return itemsLocal?.find((item) => item.id === productId)?.count || 1;
       },
       [itemsLocal, items, session],
     );
