@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { Inter } from "next/font/google";
 import AuthProvider from "../contexts/AuthProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,6 +40,7 @@ export default async function RootLayout({ children }) {
             }}
           />
           <SpeedInsights />
+          <Analytics />
           <QueryProvider>
             <CartProvider localKey="cart">
               <WhitelistProvider localKey="whitelist">
