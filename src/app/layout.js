@@ -10,9 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { auth } from "../auth";
 import { Inter } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: {
