@@ -7,9 +7,9 @@ import {
 } from "../contexts/HybridStorageFactory";
 import QueryProvider from "../contexts/QueryProvider";
 import { Toaster } from "react-hot-toast";
-import { auth } from "../auth";
 import { Inter } from "next/font/google";
 import AuthProvider from "../contexts/AuthProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   return (
-    <html lang="en" className={`$inter.className} overflow-x-hidden`}>
+    <html lang="en" className={`${inter.className} overflow-x-hidden`}>
       <body className="relative flex h-screen flex-col overflow-x-hidden text-base text-slate-700">
         <AuthProvider>
           <Toaster
@@ -38,6 +38,7 @@ export default async function RootLayout({ children }) {
               },
             }}
           />
+          <SpeedInsights />
           <QueryProvider>
             <CartProvider localKey="cart">
               <WhitelistProvider localKey="whitelist">
