@@ -2,6 +2,8 @@ import { auth } from "@/src/auth";
 import AccountForm from "@/src/components/account/AccountForm";
 import { getUserById } from "@/src/lib/data-service";
 
+export const dynamic = "force-static";
+
 export const metadata = {
   title: "Account",
 };

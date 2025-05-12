@@ -1,6 +1,8 @@
 import Cart from "@/src/components/cart/Cart";
 import PageHeader from "@/src/components/common/PageHeader";
 
+export const dynamic = "force-static";
+
 export const metadata = {
   title: "Cart",
 };

@@ -15,7 +15,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user }) {
       const fullName = user.name;
       const email = user.email;
-      console.log(user);
       try {
         const isExist = await checkEmailExists(email);
         if (isExist) {

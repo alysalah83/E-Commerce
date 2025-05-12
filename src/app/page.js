@@ -7,6 +7,8 @@ import LimitedTimeOfferSection from "../components/limitedTimeOfferSection/Limit
 import TestimonialsSection from "../components/testimonialsSection/TestimonialsSection";
 import ScrollButtons from "../components/navigation/ScrollButtons/ScrollButtons";
 
+export const dynamic = "force-static";
+
 export default async function Home() {
   return (
     <>

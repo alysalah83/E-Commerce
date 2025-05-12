@@ -11,8 +11,6 @@ export async function addReview(productId, rating, prevState, formData) {
   const reviewerName = formData.get("reviewerName");
   const reviewerEmail = formData.get("reviewerEmail");
 
-  console.log(comment, reviewerName, reviewerEmail);
-
   if (!rating)
     return {
       success: false,

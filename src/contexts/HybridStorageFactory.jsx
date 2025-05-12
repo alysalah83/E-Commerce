@@ -173,14 +173,11 @@ const createHybridStorageContext = (ContextName) => {
           : Math.round(
               items?.reduce((acc, cur) => {
                 const count = getItemCount(cur.id);
-                console.log(count);
                 return acc + cur.price * count;
               }, 0),
             ) || 0,
       [items, getItemCount],
     );
-
-    console.log(`${key}Provider-re-rendered`);
 
     const contextValue = useMemo(
       () => ({

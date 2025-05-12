@@ -16,7 +16,7 @@ export async function createProduct(product) {
     .select();
 
   if (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Couldn't create the product");
   }
 
@@ -372,7 +372,6 @@ export async function updateUser({ fullName, address, email }) {
     console.error(error);
     return { success: false, message: "couldn\'t update your information" };
   }
-  console.log(data);
   return { success: true, message: "your setting has been updated" };
 }
 
@@ -459,14 +458,11 @@ export async function updateUserCartOrWhitelist({
 }
 
 export async function getUserProducts({ email, key }) {
-  console.log("key:", key);
   const { data, error: fetchError } = await supabase
     .from("users")
     .select(key)
     .eq("email", email)
     .single();
-
-  console.log(data);
 
   if (fetchError) {
     console.error(fetchError);
@@ -474,7 +470,6 @@ export async function getUserProducts({ email, key }) {
   }
 
   const itemsArr = data[key] || [];
-  console.log(itemsArr, key);
 
   if (itemsArr.length === 0 || !itemsArr) return [];
   const items = (await getProductsByIds(itemsArr)) || [];
