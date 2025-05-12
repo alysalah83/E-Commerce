@@ -86,10 +86,10 @@ const createHybridStorageContext = (ContextName) => {
 
     const handleActions = useCallback(
       function ({ action, productId, count = 1 }) {
-        const isAuth = !!session.user.email;
+        const isAuth = !!session?.user?.email;
         const payLoad = {
           item: { id: productId, count },
-          email: session.user.email,
+          email: session?.user?.email,
           key,
           action,
         };
