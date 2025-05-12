@@ -22,7 +22,7 @@ async function SignInButton() {
           alt={`${name} avatar`}
           className="rounded-full"
         />
-        <span className="text-sm font-medium">{name}</span>
+        <span className="font-medium">{name}</span>
       </div>
     </Link>
   ) : (
@@ -33,7 +33,7 @@ async function SignInButton() {
           <h4 className="text-xs tracking-wider text-gray-400 uppercase">
             account
           </h4>
-          <p className="text-start text-sm font-semibold capitalize">sign in</p>
+          <p className="text-start font-semibold capitalize">sign in</p>
         </div>
       </button>
     </Link>

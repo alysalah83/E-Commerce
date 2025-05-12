@@ -487,3 +487,18 @@ export async function getUserProducts({ email, key }) {
 
   return itemsWithCount || [];
 }
+
+export async function getSearchItems(query) {
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, image, title, price, rating")
+    .like("title", `%${query}%`)
+    .order("title", { ascending: true })
+    .range(0, 10);
+
+  if (error) {
+    console.error(error);
+    throw new Error("couldn't get search query products");
+  }
+  return data;
+}
