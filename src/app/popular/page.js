@@ -5,8 +5,6 @@ import {
 import MainPopular from "@/src/components/popular page/MainPopular";
 import PageHeader from "@/src/components/common/PageHeader";
 
-export const dynamic = "force-static";
-
 export const metadata = {
   title: "Popular",
 };
