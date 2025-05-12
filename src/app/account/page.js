@@ -2,6 +2,10 @@ import { auth } from "@/src/auth";
 import AccountForm from "@/src/components/account/AccountForm";
 import { getUserById } from "@/src/lib/data-service";
 
+export const metadata = {
+  title: "Account",
+};
+
 async function page() {
   const session = await auth();
   const userData = await getUserById(session.user.userId);

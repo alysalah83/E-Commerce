@@ -9,6 +9,13 @@ import QueryProvider from "../contexts/QueryProvider";
 import { Toaster } from "react-hot-toast";
 import { auth } from "../auth";
 
+export const metadata = {
+  title: {
+    template: "%s | ShopDigital",
+    default: "ShopDigital",
+  },
+};
+
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (

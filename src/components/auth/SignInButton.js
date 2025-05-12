@@ -14,7 +14,7 @@ async function SignInButton() {
 
   return isAuth ? (
     <Link href="/account">
-      <div className="flex cursor-pointer items-center gap-2 font-medium text-gray-400">
+      <div className="flex cursor-pointer items-center gap-2 text-gray-400">
         <Image
           src={image}
           width={30}
@@ -22,7 +22,7 @@ async function SignInButton() {
           alt={`${name} avatar`}
           className="rounded-full"
         />
-        <span>{name}</span>
+        <span className="text-sm font-medium">{name}</span>
       </div>
     </Link>
   ) : (

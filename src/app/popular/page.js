@@ -5,6 +5,10 @@ import {
 import MainPopular from "@/src/components/popular page/MainPopular";
 import PageHeader from "@/src/components/common/PageHeader";
 
+export const metadata = {
+  title: "Popular",
+};
+
 async function page({ searchParams }) {
   const params = await searchParams;
   const page = Number(params?.page) || 1;

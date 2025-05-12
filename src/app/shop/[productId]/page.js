@@ -5,6 +5,10 @@ import ProductMain from "@/src/components/product page/ProductMain";
 import { getAllProductsId } from "@/src/lib/data-service";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Product",
+};
+
 export const dynamicParams = false;
 
 export async function generateStaticParams() {

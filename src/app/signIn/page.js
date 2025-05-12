@@ -4,6 +4,10 @@ import Image from "next/image";
 import PageHeader from "@/src/components/common/PageHeader";
 import { signInAction } from "@/src/lib/actions";
 
+export const metadata = {
+  title: "sign in",
+};
+
 function page() {
   return (
     <>

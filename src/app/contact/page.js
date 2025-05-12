@@ -7,6 +7,10 @@ import {
   IoMailOutline,
 } from "react-icons/io5";
 
+export const metadata = {
+  title: "Contact",
+};
+
 function page() {
   return (
     <>

@@ -3,6 +3,10 @@ import MainShop from "@/src/components/shop page/main content/MainShop";
 import { ProductsProvider } from "@/src/contexts/ProductsProvider";
 import PageHeader from "@/src/components/common/PageHeader";
 
+export const metadata = {
+  title: "Shop",
+};
+
 function page() {
   return (
     <div className="bg-slate-200">

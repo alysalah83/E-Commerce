@@ -25,7 +25,7 @@ function HeroProductCard({
             limited time offer
           </span>
           <p className="flex items-center gap-2">
-            <span className="text-3xl font-semibold text-red-600">
+            <span className="text-2xl font-semibold text-red-600">
               ${price}
             </span>
             <span className="font-medium text-gray-500 line-through">
