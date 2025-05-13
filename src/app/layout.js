@@ -23,8 +23,11 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.className} overflow-x-hidden`}>
-      <body className="relative flex h-screen flex-col overflow-x-hidden text-base text-slate-700">
+    <html
+      lang="en"
+      className={`${inter.className} overflow-x-hidden overflow-y-auto`}
+    >
+      <body className="relative flex min-h-screen w-full flex-col overflow-x-hidden text-base text-slate-700">
         <AuthProvider>
           <Toaster
             position="top-center"

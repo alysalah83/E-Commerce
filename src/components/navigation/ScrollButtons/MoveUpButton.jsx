@@ -42,6 +42,7 @@ function MoveUpButton() {
       className={`cursor-pointer rounded-md ${isVisible ? "block" : "hidden"} bg-blue-700 p-1 hover:bg-blue-800`}
       onClick={handleScrollUp}
       ref={buttonRef}
+      aria-label="Scroll to Up Button"
     >
       <MdKeyboardArrowUp className="h-7 w-7 fill-slate-100 lg:h-9 lg:w-9" />
     </button>
