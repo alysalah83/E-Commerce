@@ -68,13 +68,13 @@ Accessible via primary navigation and footer links
 
 Framework: Next.js (React)
 
-Styling: CSS Modules / Tailwind CSS
+Styling: Tailwind CSS
 
 Authentication: NextAuth.js (Google OAuth)
 
-State Management: React Context API / Redux (optional)
+State Management: React Context API
 
-Data Storage: Hybrid (localStorage + MongoDB / Firebase)
+Data Storage: Hybrid (localStorage + supabase)
 
 Deployment: Vercel
 
