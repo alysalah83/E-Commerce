@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Digital Products E‑Commerce Store
 
-## Getting Started
+Welcome to Digital Shop, a modern e‑commerce platform built with Next.js designed for selling digital products. Experience a beautiful homepage, rich product detail pages, seamless search and filtering, hybrid cart/whitelist functionality, and more.
 
-First, run the development server:
+🚀 Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+View the live site on Vercel
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📂 Repository
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+GitHub: alysalah83/E-Commerce
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+✨ Features
 
-## Learn More
+Stunning Homepage
 
-To learn more about Next.js, take a look at the following resources:
+Multiple sections showcasing featured collections, top sellers, and promotions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Hero banner with an interactive slider
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Quick search bar for immediate product lookup
 
-## Deploy on Vercel
+Shop Page
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Grid and list display options
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Filtering by category, price range, rating, and more
+
+Sorting by newest, price, and popularity
+
+Product Detail Page
+
+Large, full‑screen capable product images
+
+Detailed product descriptions and specifications
+
+User reviews & rating system with comments and stars
+
+Cart & Wishlist
+
+Hybrid storage: supports both guest users (via localStorage) and authenticated users (via database)
+
+Add or remove items seamlessly
+
+Authentication
+
+Sign in with Google OAuth
+
+Protected account area for profile management
+
+Account Page (Authenticated Only)
+
+Edit user name and profile information
+
+Add multiple shipping or billing addresses
+
+One‑click geolocation lookup to auto‑fill address
+
+Additional Pages
+
+Popular products showcase
+
+Contact page with a form and map integration
+
+Accessible via primary navigation and footer links
+
+🛠️ Tech Stack
+
+Framework: Next.js (React)
+
+Styling: CSS Modules / Tailwind CSS
+
+Authentication: NextAuth.js (Google OAuth)
+
+State Management: React Context API / Redux (optional)
+
+Data Storage: Hybrid (localStorage + MongoDB / Firebase)
+
+Deployment: Vercel
+
+📝 License
+
+MIT © alysalah83
