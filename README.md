@@ -1,83 +1,63 @@
-Digital Products E‑Commerce Store
+# 🛍️ Digital Products E‑Commerce Store
 
-Welcome to Digital Shop, a modern e‑commerce platform built with Next.js designed for selling digital products. Experience a beautiful homepage, rich product detail pages, seamless search and filtering, hybrid cart/whitelist functionality, and more.
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-🚀 Live Demo
+Welcome to **Digital Shop**, a modern, responsive e-commerce site built with **Next.js** for selling digital products. The platform provides a smooth shopping experience with beautiful UI, advanced filtering, and account management features.
 
-View the live site on Vercel
+## 🔗 Live Demo
 
-📂 Repository
+🌐 [Visit the Live Site](https://shop-digital-ten.vercel.app/)
 
-GitHub: alysalah83/E-Commerce
+## 💾 Repository
 
-✨ Features
+📁 [GitHub – alysalah83/E-Commerce](https://github.com/alysalah83/E-Commerce)
 
-Stunning Homepage
+---
 
-Multiple sections showcasing featured collections, top sellers, and promotions
+## ✨ Features
 
-Hero banner with an interactive slider
+### 🏠 Homepage
+- Elegant hero section with animated slider
+- Multiple featured sections (bestsellers, new arrivals, etc.)
+- Global search bar for quick product discovery
 
-Quick search bar for immediate product lookup
+### 🛒 Shop Page
+- Toggle views (grid / list)
+- Filter by category, price, rating
+- Sort by latest, price, popularity
 
-Shop Page
+### 📦 Product Detail
+- Zoomable & full-screen image viewer
+- Detailed product description
+- Customer reviews (comments + star ratings)
 
-Grid and list display options
+### ❤️ Cart & Wishlist
+- Works for both guest & signed-in users
+- Persistent state using localStorage and backend (hybrid storage)
+- Add/remove items seamlessly
 
-Filtering by category, price range, rating, and more
+### 🔐 Authentication
+- Google sign-in using **NextAuth.js**
+- Protected routes and pages
 
-Sorting by newest, price, and popularity
+### 👤 User Account
+- Update personal info (name, profile)
+- Auto-fill shipping address using geolocation
+- View and manage order-related info
 
-Product Detail Page
+### 📄 Extra Pages
+- Popular products
+- Contact page with interactive map
+- Fully navigable via navbar & footer
 
-Large, full‑screen capable product images
+---
 
-Detailed product descriptions and specifications
+## ⚙️ Tech Stack
 
-User reviews & rating system with comments and stars
-
-Cart & Wishlist
-
-Hybrid storage: supports both guest users (via localStorage) and authenticated users (via database)
-
-Add or remove items seamlessly
-
-Authentication
-
-Sign in with Google OAuth
-
-Protected account area for profile management
-
-Account Page (Authenticated Only)
-
-Edit user name and profile information
-
-Add multiple shipping or billing addresses
-
-One‑click geolocation lookup to auto‑fill address
-
-Additional Pages
-
-Popular products showcase
-
-Contact page with a form and map integration
-
-Accessible via primary navigation and footer links
-
-🛠️ Tech Stack
-
-Framework: Next.js (React)
-
-Styling: CSS Modules / Tailwind CSS
-
-Authentication: NextAuth.js (Google OAuth)
-
-State Management: React Context API / Redux (optional)
-
-Data Storage: Hybrid (localStorage + MongoDB / Firebase)
-
-Deployment: Vercel
-
-📝 License
-
-MIT © alysalah83
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Auth:** [NextAuth.js](https://next-auth.js.org/) with Google OAuth
+- **State Management:** React Context API
+- **Storage:** localStorage + (MongoDB / Firebase)
+- **Deployment:** [Vercel](https://vercel.com/)
