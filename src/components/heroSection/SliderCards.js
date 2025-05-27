@@ -2,7 +2,7 @@
 
 import SliderButtons from "./SliderButtons";
 import SliderCard from "./SliderCard";
-import Slider from "../common/compoundComponents/Slider";
+import Slider from "../compoundComponents/Slider";
 
 function SliderCards({ products }) {
   return (

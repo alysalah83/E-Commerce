@@ -9,6 +9,7 @@ function OverLay({
     <div
       className={`fixed ${visibility} inset-0 z-30 ${color} cursor-pointer`}
       onClick={handleToggleVisibility}
+      aria-hidden="true"
     />
   );
 }

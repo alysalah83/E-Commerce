@@ -1,5 +1,5 @@
 export { auth as middleware } from "@/src/auth";
 
 export const config = {
-  matcher: ["/account"],
+  matcher: ["/account/settings", "/account/addProduct"],
 };

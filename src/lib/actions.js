@@ -98,11 +98,13 @@ export async function updateUser(email, prevState, formData) {
 
   revalidatePath("/");
 
-  return { success: true, message: "setting has been updated" };
+  return { success: true, message: "user settings has been updated" };
 }
 
+export async function addProduct() {}
+
 export async function signInAction() {
-  await signIn("google", { redirectTo: "/account" });
+  await signIn("google", { redirectTo: "/account/settings" });
 }
 
 export async function signOutAction() {
