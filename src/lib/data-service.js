@@ -486,7 +486,7 @@ export async function getUserProducts({ email, key }) {
 export async function getSearchItems(query) {
   const { data, error } = await supabase
     .from("products")
-    .select("id, image, title, price, rating")
+    .select("id, image, title, price, rating, brand")
     .like("title", `%${query}%`)
     .order("title", { ascending: true })
     .range(0, 10);
@@ -544,4 +544,33 @@ export async function getCategoryId(category) {
   }
 
   return data.id;
+}
+
+export async function getUserOwnProducts(userId) {
+  if (!userId) return null;
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("userID", userId);
+
+  if (error) {
+    console.error(error);
+    throw new Error("couldn't get the user products");
+  }
+
+  return data;
+}
+
+export async function deleteProduct(productId) {
+  if (!productId) throw new Error("now product selected to be deleted");
+
+  const { data, error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", productId);
+
+  if (error) {
+    console.error(error);
+    throw new Error("couldn't delete the product");
+  }
 }

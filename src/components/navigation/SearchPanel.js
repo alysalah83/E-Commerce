@@ -2,13 +2,11 @@
 
 import { CiSearch } from "react-icons/ci";
 import OverLay from "../common/OverLay";
-import Image from "next/image";
-import RateStars from "../common/RateStars";
 import { useState } from "react";
 import { useSearchItems } from "@/src/hooks/useSearchItems";
 import Loader from "../common/Loader";
-import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
+import ProductItem from "../common/ProductItem";
 
 function SearchPanel({ handleToggleVisibility, visible }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -47,7 +45,7 @@ function SearchPanel({ handleToggleVisibility, visible }) {
           <ul className="flex w-full flex-col gap-6">
             {items && items.length > 0 ? (
               items.map((item) => (
-                <SearchItem
+                <ProductItem
                   item={item}
                   searchQuery={searchQuery}
                   key={item.id}
@@ -61,62 +59,6 @@ function SearchPanel({ handleToggleVisibility, visible }) {
           </ul>
         )}
       </div>
-    </>
-  );
-}
-
-function SearchItem({ item, searchQuery }) {
-  const { id, image, title, price, rating } = item;
-
-  return (
-    <Link href={`/shop/${id}`} className="w-full">
-      <li className="flex items-center gap-4 rounded-xl py-4 transition duration-300 hover:bg-gray-200 md:px-4">
-        <div className="h-26 w-26 rounded-xl bg-gray-100 lg:h-32 lg:w-32 xl:h-40 xl:w-40">
-          <div className="relative h-full w-full">
-            <Image
-              fill
-              src={image}
-              alt={`${title} image`}
-              className="object-contain"
-            />
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 py-6 sm:px-6">
-          <h4
-            className={`cursor-pointer text-lg font-semibold transition duration-300 hover:text-blue-600 lg:text-2xl`}
-          >
-            <HighlightedText title={title} query={searchQuery} />
-          </h4>
-          <div className="flex gap-1 lg:gap-3">
-            <span className="text-lg font-medium text-gray-500 lg:text-xl">
-              ${price}
-            </span>
-            <span className="text-lg font-medium text-gray-300">|</span>
-            <RateStars size={20} rating={rating} />
-          </div>
-        </div>
-      </li>
-    </Link>
-  );
-}
-
-function HighlightedText({ title, query }) {
-  if (!title || !query) return title;
-  const lowerTitle = title.toLowerCase();
-  const lowerQuery = query.toLowerCase();
-  const indexOfQuery = lowerTitle.indexOf(lowerQuery);
-
-  if (indexOfQuery === -1) return title;
-
-  const before = title.slice(0, indexOfQuery);
-  const highlightQuery = title.slice(indexOfQuery, indexOfQuery + query.length);
-  const after = title.slice(indexOfQuery + query.length);
-
-  return (
-    <>
-      {before}
-      <span className="bg-yellow-300">{highlightQuery}</span>
-      {after}
     </>
   );
 }

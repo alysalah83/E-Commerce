@@ -10,8 +10,8 @@ import { auth, signIn, signOut } from "../auth";
 import {
   updateUser as updateUserApi,
   addProduct as addProductApi,
+  deleteProduct as deleteProductApi,
 } from "./data-service";
-import { useQueryClient } from "@tanstack/react-query";
 
 export async function addReview(productId, rating, prevState, formData) {
   const comment = formData.get("comment");
@@ -109,6 +109,11 @@ export async function updateUser(email, prevState, formData) {
 }
 
 export async function addProduct(prevState, formData) {
+  const session = await auth();
+
+  const { userId } = session?.user;
+  if (!userId) return { success: false, message: "user are not logged in" };
+
   const product = {};
   for (const [key, value] of formData.entries()) product[key] = value;
   console.log(product);
@@ -166,11 +171,22 @@ export async function addProduct(prevState, formData) {
     rating: 0,
     reviews: [],
     categoriesID,
+    userID: userId,
   });
 
   if (error) return error;
 
   return { success: true, message: "Your product has been added" };
+}
+
+export async function deleteProduct(productId) {
+  const session = await auth();
+  const userId = session?.user?.userId;
+  if (!userId) return;
+
+  await deleteProductApi(productId);
+
+  revalidatePath("/account/manageProducts");
 }
 
 export async function signInAction() {

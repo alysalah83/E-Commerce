@@ -18,7 +18,7 @@ function PageHeader({ heading }) {
         <h1 className="text-xl font-bold tracking-wide capitalize lg:text-3xl">
           {heading}
         </h1>
-        <span className="text-sm font-medium tracking-wide text-gray-500 lg:text-base lg:font-semibold">
+        <span className="text-end text-sm font-medium tracking-wide text-gray-500 lg:text-base lg:font-semibold">
           {pathArr.slice(0, -1).join(" / ")} {""} / {""}
           <span className="text-blue-600 capitalize">{pathArr.at(-1)}</span>
         </span>

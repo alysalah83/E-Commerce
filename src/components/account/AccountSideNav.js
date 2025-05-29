@@ -17,6 +17,7 @@ function AccountSideNav() {
   const nav = [
     { label: "Account Setting", href: "/account/settings" },
     { label: "Add Product", href: "/account/addProduct" },
+    { label: "Manage Your Products", href: "/account/manageProducts" },
   ];
 
   return (
@@ -66,7 +67,7 @@ function NavList({ item }) {
   return (
     <Link href={href}>
       <li
-        className={`px-16 py-4 font-medium tracking-wide transition duration-300 ${isActive ? "bg-gray-100 text-blue-600" : "bg-white text-gray-600"} hover:bg-gray-100 hover:text-blue-600`}
+        className={`px-16 py-4 font-medium tracking-wide text-nowrap transition duration-300 ${isActive ? "bg-gray-100 text-blue-600" : "bg-white text-gray-600"} hover:bg-gray-100 hover:text-blue-600`}
       >
         {label}
       </li>
