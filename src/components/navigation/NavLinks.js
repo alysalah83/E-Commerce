@@ -27,8 +27,9 @@ function NavLinks() {
     ...links,
     { label: "Cart", href: "/cart" },
     { label: "Whitelist", href: "/whitelist" },
-    { label: "account", href: "/account" },
-    { label: "signIn", href: "/signIn" },
+    { label: "Account settings", href: "/account/settings" },
+    { label: "Add Product", href: "/account/addProduct" },
+    { label: "SignIn", href: "/signIn" },
     { label: "Product", href: "/shop/78" },
     { label: "Not Found", href: "/not-found" },
   ];

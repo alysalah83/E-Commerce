@@ -16,7 +16,7 @@ function Button({
           typeof color === "object"
             ? `bg-gradient-to-br ${color.from} ${color.to}`
             : `${color}`
-        } px-8 py-4 font-semibold tracking-wide text-slate-100 capitalize transition duration-300 disabled:cursor-not-allowed disabled:bg-blue-950 ${
+        } px-6 py-3 font-semibold tracking-wide text-nowrap text-slate-100 capitalize transition duration-300 disabled:cursor-not-allowed disabled:bg-blue-950 lg:px-8 lg:py-4 ${
           typeof hoverColor === "object"
             ? `bg-gradient-to-br ${hoverColor.from} ${hoverColor.to}`
             : `${hoverColor}`

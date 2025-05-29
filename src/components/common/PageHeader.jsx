@@ -13,7 +13,7 @@ function PageHeader({ heading }) {
   });
 
   return (
-    <header className="border-y border-gray-200 bg-white">
+    <header className="col-span-2 border-y border-gray-200 bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-8 md:px-10 md:py-10">
         <h1 className="text-xl font-bold tracking-wide capitalize lg:text-3xl">
           {heading}

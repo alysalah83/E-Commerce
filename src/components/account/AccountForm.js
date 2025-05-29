@@ -1,14 +1,13 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import FormInputGroup from "../../components/account/FormInputGroup";
+import FormInputGroup from "../common/FormInputGroup";
 import { getGeoLocation } from "@/src/lib/helper";
 import { getAddressInformation } from "@/src/lib/geo";
 import toast from "react-hot-toast";
 import { IoLocationOutline } from "react-icons/io5";
 import Button from "../common/Button";
-import { LiaSignOutAltSolid } from "react-icons/lia";
-import { signOutAction, updateUser } from "@/src/lib/actions";
+import { updateUser } from "@/src/lib/actions";
 import FormStateMessage from "../common/FormStateMessage";
 
 function AccountForm({ session, userData }) {
@@ -85,20 +84,8 @@ function AccountForm({ session, userData }) {
       <p className="mb-12 text-sm font-medium text-gray-400">
         Click the location button to get your address
       </p>
-      <div className="mb-4 flex items-center gap-6">
+      <div className="mb-2">
         <Button disabled={disableForm || isPending}>Update Setting</Button>
-        <button
-          onClick={(e) => {
-            setDisableForm(true);
-            e.preventDefault();
-            signOutAction();
-          }}
-          disabled={disableForm || isPending}
-          className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 font-medium text-gray-500 transition duration-300 hover:bg-red-500 hover:text-red-100 disabled:cursor-not-allowed disabled:bg-red-950"
-        >
-          <LiaSignOutAltSolid className="h-4 w-4" />
-          <span>Sign out</span>
-        </button>
       </div>
       <FormStateMessage state={state} />
     </form>

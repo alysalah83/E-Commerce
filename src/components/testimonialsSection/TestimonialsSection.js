@@ -3,7 +3,7 @@
 import SectionHeader from "../common/SectionHeader";
 import { HiOutlineUsers } from "react-icons/hi2";
 import TestimonialCards from "./TestimonialCards";
-import Slider from "../common/compoundComponents/Slider";
+import Slider from "../compoundComponents/Slider";
 
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 

@@ -1,4 +1,4 @@
-import Slider from "../common/compoundComponents/Slider";
+import Slider from "../compoundComponents/Slider";
 
 function SliderButtons() {
   return (

@@ -1,10 +1,17 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addReview as addReviewApi } from "./data-service";
+import {
+  addReview as addReviewApi,
+  getCategoryId,
+  uploadProductImage,
+} from "./data-service";
 import { auth, signIn, signOut } from "../auth";
-import { updateUser as updateUserApi } from "./data-service";
-import { update } from "../auth";
+import {
+  updateUser as updateUserApi,
+  addProduct as addProductApi,
+} from "./data-service";
+import { useQueryClient } from "@tanstack/react-query";
 
 export async function addReview(productId, rating, prevState, formData) {
   const comment = formData.get("comment");
@@ -98,11 +105,76 @@ export async function updateUser(email, prevState, formData) {
 
   revalidatePath("/");
 
-  return { success: true, message: "setting has been updated" };
+  return { success: true, message: "user settings has been updated" };
+}
+
+export async function addProduct(prevState, formData) {
+  const product = {};
+  for (const [key, value] of formData.entries()) product[key] = value;
+  console.log(product);
+  const { category, imageFile } = product;
+  const title = product.title.trim();
+  const brand = product.brand.trim();
+  const description = product.description.trim();
+  const price = Number(product.price);
+  const stock = Number(product.stock);
+
+  if (title.length > 100)
+    return { success: false, message: "title must be less than 100 letter" };
+
+  if (brand.length > 50)
+    return { success: false, message: "brand must be less than 50 letter" };
+
+  if (price <= 0)
+    return { success: false, message: "price must be greater than 0" };
+
+  if (price >= 100000)
+    return {
+      success: false,
+      message: "can't publish products with large price",
+    };
+
+  if (stock <= 0 && stock > 10000)
+    return { success: false, message: "in vialed stock number" };
+
+  if (description.length > 5000)
+    return {
+      success: false,
+      message: "description must be less than 5000 letter",
+    };
+
+  const categoriesID = await getCategoryId(category);
+  console.log(categoriesID);
+
+  if (categoriesID.error) return categoriesID;
+
+  const data = await uploadProductImage(imageFile);
+
+  console.log(data);
+
+  if (data.error) return data;
+
+  const error = await addProductApi({
+    image: `${process.env.SUPABASE_URL}/storage/v1/object/public/${data.fullPath}`,
+    title,
+    category,
+    price,
+    discountPercentage: 0,
+    description,
+    brand,
+    stock,
+    rating: 0,
+    reviews: [],
+    categoriesID,
+  });
+
+  if (error) return error;
+
+  return { success: true, message: "Your product has been added" };
 }
 
 export async function signInAction() {
-  await signIn("google", { redirectTo: "/account" });
+  await signIn("google", { redirectTo: "/account/settings" });
 }
 
 export async function signOutAction() {

@@ -15,7 +15,7 @@ async function SignInButton() {
   console.log(isAuth);
 
   return isAuth ? (
-    <Link href="/account">
+    <Link href="/account/settings">
       <div className="flex cursor-pointer items-center gap-2 text-gray-400">
         <Image
           src={image}
