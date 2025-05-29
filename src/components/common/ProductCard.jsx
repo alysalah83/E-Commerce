@@ -23,7 +23,7 @@ function ProductCard({ product }) {
         <ProductFuturesBar product={product} />
       </div>
       <RateStars rating={rating} />
-      <h3 className="mb-3 text-lg font-semibold tracking-wide transition-colors duration-300 hover:cursor-pointer hover:text-blue-700">
+      <h3 className="mb-3 text-lg font-semibold tracking-wide capitalize transition-colors duration-300 hover:cursor-pointer hover:text-blue-700">
         <Link href={`/shop/${id}`}>{title}</Link>
       </h3>
       <span className="flex gap-3 text-lg font-bold">
