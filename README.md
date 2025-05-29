@@ -49,7 +49,7 @@ A modern, responsive e-commerce platform built with Next.js, designed for sellin
 
 | Purpose            | Technology                                                 |
 | ------------------ | ---------------------------------------------------------- |
-| **Framework**      | [Next.js 14](https://nextjs.org/)                          |
+| **Framework**      | [Next.js](https://nextjs.org/)                             |
 | **Styling**        | [Tailwind CSS](https://tailwindcss.com/)                   |
 | **Authentication** | [NextAuth.js](https://next-auth.js.org/) with Google OAuth |
 | **Database**       | [Supabase](https://supabase.com/)                          |
