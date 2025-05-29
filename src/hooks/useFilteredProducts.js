@@ -14,7 +14,7 @@ export function useFilteredProducts(
     queryFn: () =>
       getFilteredProducts(page, categoryParams, minPrice, maxPrice, date),
     queryKey: ["products", page, categoryParams, minPrice, maxPrice, date],
-    staleTime: 10 * 60 * 1000,
+    staleTime: 0,
   });
 
   return {

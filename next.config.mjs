@@ -6,6 +6,9 @@ const nextConfig = {
       new URL(
         "https://msxxdsxdobsfqyxuvjla.supabase.co/storage/v1/object/public/categories//**",
       ),
+      new URL(
+        "https://msxxdsxdobsfqyxuvjla.supabase.co/storage/v1/object/public/products-images/**",
+      ),
       new URL("https://lh3.googleusercontent.com/a/**"),
     ],
   },

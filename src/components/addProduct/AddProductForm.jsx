@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useActionState, useState } from "react";
+import { use, useActionState, useEffect, useState } from "react";
 import FormInputGroup from "../common/FormInputGroup";
 import { IoIosAdd } from "react-icons/io";
 import toast from "react-hot-toast";
@@ -11,7 +11,15 @@ import { addProduct } from "@/src/lib/actions";
 
 function AddProductForm({ categoriesPromise }) {
   const [state, action, isPending] = useActionState(addProduct, null);
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const categories = use(categoriesPromise);
+
+  useEffect(() => {
+    setImage(null);
+    setImagePreview(null);
+  }, [state]);
+
   return (
     <main className="mx-auto my-24 max-w-xl rounded-xl bg-white">
       <h2 className="border-b border-gray-100 p-6 text-xl font-semibold tracking-wide text-gray-600 sm:px-8 sm:text-2xl sm:font-bold">
@@ -52,10 +60,18 @@ function AddProductForm({ categoriesPromise }) {
           disabled={isPending}
           className="mt-6 h-36 w-full rounded-md border border-gray-300 bg-gray-100 px-4 py-2 ring-blue-600 outline-0 transition duration-300 focus:bg-gray-50 focus:ring-1 disabled:cursor-not-allowed disabled:bg-gray-300"
         />
-        <ImageUploader disabled={isPending} />
-        <div className="mt-8 text-end">
+        <ImageUploader
+          disabled={isPending}
+          image={image}
+          setImage={setImage}
+          imagePreview={imagePreview}
+          setImagePreview={setImagePreview}
+        />
+        <div className="mt-8 flex items-center">
           <FormStateMessage state={state} />
-          <Button disabled={isPending}>add product</Button>
+          <div className="ml-auto">
+            <Button disabled={isPending}>add product</Button>
+          </div>
         </div>
       </form>
     </main>
@@ -78,10 +94,13 @@ function SelectCategory({ categories }) {
   );
 }
 
-function ImageUploader({ disabled }) {
-  const [image, setImage] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
-
+function ImageUploader({
+  disabled,
+  image,
+  setImage,
+  imagePreview,
+  setImagePreview,
+}) {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return toast.error("no image are selected");
@@ -116,13 +135,15 @@ function ImageUploader({ disabled }) {
           <span className="text-sm font-medium tracking-wide text-gray-400">
             Uploaded: {image.name}
           </span>
-          <Image
-            width={45}
-            height={45}
-            src={imagePreview}
-            alt={image.name}
-            className="object-contain"
-          />
+          {imagePreview && (
+            <Image
+              width={45}
+              height={45}
+              src={imagePreview}
+              alt={image.name}
+              className="object-contain"
+            />
+          )}
         </div>
       )}
     </div>

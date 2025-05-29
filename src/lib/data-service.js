@@ -497,3 +497,51 @@ export async function getSearchItems(query) {
   }
   return data;
 }
+
+export async function uploadProductImage(imageFile) {
+  const imageName = `${Math.random()}_${imageFile.name}`;
+
+  const { data, error } = await supabase.storage
+    .from("products-images")
+    .upload(imageName, imageFile);
+
+  if (error) {
+    console.error(error);
+    return {
+      success: false,
+      error: true,
+      message: "couldn't upload that the image",
+    };
+  }
+
+  return data;
+}
+
+export async function addProduct(product) {
+  const { error } = await supabase.from("products").insert([product]);
+
+  if (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "couldn't upload the product",
+    };
+  }
+
+  return null;
+}
+
+export async function getCategoryId(category) {
+  const { data, error } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("category", category)
+    .single();
+
+  if (error) {
+    console.error("Error fetching category:", error);
+    return { success: false, error: true, message: "inVialed category" };
+  }
+
+  return data.id;
+}
