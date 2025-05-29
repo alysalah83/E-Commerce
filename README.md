@@ -1,15 +1,17 @@
-# 🛍️ Digital Products E‑Commerce Store
+# 🛍️ Digital Shop – E‑Commerce for Digital Products
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Welcome to **Digital Shop**, a modern, responsive e-commerce site built with **Next.js** for selling digital products. The platform provides a smooth shopping experience with beautiful UI, advanced filtering, and account management features.
+**Digital Shop** is a modern, responsive e-commerce platform built with **Next.js**, tailored for selling digital products. It provides a sleek and smooth shopping experience with an intuitive UI, advanced filtering, wishlist functionality, and user account management.
 
-## 🔗 Live Demo
+---
 
-🌐 [Visit the Live Site](https://shop-digital-ten.vercel.app/)
+## 🌐 Live Demo
 
-## 💾 Repository
+🔗 [Visit the Live Site](https://shop-digital-ten.vercel.app/)
+
+## 📂 Repository
 
 📁 [GitHub – alysalah83/E-Commerce](https://github.com/alysalah83/E-Commerce)
 
@@ -20,51 +22,77 @@ Welcome to **Digital Shop**, a modern, responsive e-commerce site built with **N
 ### 🏠 Homepage
 
 - Elegant hero section with animated slider
-- Multiple featured sections (bestsellers, new arrivals, etc.)
-- Global search bar for quick product discovery
+- Featured sections: Bestsellers, New Arrivals, etc.
+- Global search bar for instant product discovery
 
-### 🛒 Shop Page
+### 🛍️ Shop Page
 
-- Toggle views (grid / list)
-- Filter by category, price, rating
-- Sort by latest, price, popularity
+- Grid/List toggle view options
+- Advanced filters: category, price range, rating
+- Sorting: Latest, Price (Low–High), Popularity
 
-### 📦 Product Detail
+### 📦 Product Details
 
-- Zoomable & full-screen image viewer
-- Detailed product description
-- Customer reviews (comments + star ratings)
+- Full-screen and zoomable product images
+- Rich product descriptions
+- Customer reviews with star ratings and comments
 
-### ❤️ Cart & Wishlist
+### 🛒 Cart & Wishlist
 
-- Works for both guest & signed-in users
-- Persistent state using localStorage and backend (hybrid storage)
-- Add/remove items seamlessly
+- Works for both guest and signed-in users
+- Persistent state (localStorage + backend sync)
+- Seamless add/remove with real-time UI updates
 
 ### 🔐 Authentication
 
-- Google sign-in using **NextAuth.js**
-- Protected routes and pages
+- Google sign-in via **NextAuth.js**
+- Protected routes (e.g., account, product submission)
 
 ### 👤 User Account
 
-- Update personal info (name, profile)
-- Auto-fill shipping address using geolocation
-- View and manage order-related info
+- Edit personal information (name, avatar, address)
+- Auto-fill address using browser geolocation
+- View & manage past orders
+
+### ➕ Product Management
+
+- Logged-in users can add new products
+- Edit or delete your published products
+- Easy-to-use form for product uploads
 
 ### 📄 Extra Pages
 
-- Popular products
-- Contact page with interactive map
-- Fully navigable via navbar & footer
+- Popular Products
+- Contact page with embedded map
+- Fully navigable UI (header + footer)
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **Framework:** [Next.js](https://nextjs.org/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Auth:** [NextAuth.js](https://next-auth.js.org/) with Google OAuth
-- **State Management:** React Context API
-- **Storage:** localStorage + (Supabase)
-- **Deployment:** [Vercel](https://vercel.com/)
+| Purpose              | Technology                                                 |
+| -------------------- | ---------------------------------------------------------- |
+| **Framework**        | [Next.js](https://nextjs.org/)                             |
+| **Styling**          | [Tailwind CSS](https://tailwindcss.com/)                   |
+| **Authentication**   | [NextAuth.js](https://next-auth.js.org/) with Google OAuth |
+| **State Management** | React Context API                                          |
+| **Storage**          | localStorage + [Supabase](https://supabase.com/)           |
+| **Deployment**       | [Vercel](https://vercel.com/)                              |
+
+---
+
+## 🚀 Getting Started
+
+### 📦 Prerequisites
+
+- Node.js and npm installed
+- Supabase project with configured tables
+- Google OAuth credentials for NextAuth
+
+### 🛠️ Installation
+
+```bash
+git clone https://github.com/alysalah83/E-Commerce.git
+cd E-Commerce
+npm install
+```
