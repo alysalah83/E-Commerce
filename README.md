@@ -54,7 +54,7 @@ A modern, responsive e-commerce platform built with Next.js, designed for sellin
 | **Authentication** | [NextAuth.js](https://next-auth.js.org/) with Google OAuth |
 | **Database**       | [Supabase](https://supabase.com/)                          |
 | **Deployment**     | [Vercel](https://vercel.com/)                              |
-| **Language**       | TypeScript/JavaScript                                      |
+| **Language**       | JavaScript                                                 |
 
 ## 📋 Prerequisites
 
