@@ -1,10 +1,10 @@
-import { useCart } from "@/src/contexts/HybridStorageFactory";
+import { useCart } from "@/src/hooks/useCart";
 import Button from "./Button";
 import toast from "react-hot-toast";
 
 function ButtonAddToCart({ id, count = 1 }) {
-  const { handleActions, checkAddedItem } = useCart();
-  const isInCart = checkAddedItem(id);
+  const { handleActions, isInCart: checkIsInCart } = useCart();
+  const isInCart = checkIsInCart(id);
 
   return (
     <Button

@@ -304,7 +304,25 @@ export async function addReview({
 export async function getProductsByIds(cartItemsId) {
   if (cartItemsId.length === 0 || !cartItemsId) return [];
 
-  const ids = cartItemsId.map((item) => item.id);
+  // const ids = cartItemsId.map((item) => (item.id ? item.id : item));
+  const ids = cartItemsId;
+  console.log(ids);
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, title, image, price, stock")
+    .in("id", ids);
+
+  if (error) {
+    console.error(error);
+    throw new Error("couldn't get the cart products");
+  }
+
+  return data;
+}
+
+export async function getProductsByIdsRTX(cartItemsId) {
+  if (cartItemsId.length === 0 || !cartItemsId) return [];
 
   const { data, error } = await supabase
     .from("products")
@@ -472,7 +490,8 @@ export async function getUserProducts({ email, key }) {
   const itemsArr = data[key] || [];
 
   if (itemsArr.length === 0 || !itemsArr) return [];
-  const items = (await getProductsByIds(itemsArr)) || [];
+  const itemsId = itemsArr.map((item) => item.id);
+  const items = (await getProductsByIds(itemsId)) || [];
 
   const itemsWithCount = items?.map((item) => {
     const itemCount =

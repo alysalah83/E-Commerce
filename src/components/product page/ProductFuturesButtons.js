@@ -3,9 +3,9 @@
 import Button from "../common/Button";
 import ProductPurchaseCount from "./ProductPurchaseCount";
 import { useState } from "react";
-import { useCart } from "@/src/contexts/HybridStorageFactory";
 import ButtonAddToCart from "../common/ButtonAddToCar";
 import ButtonWhitelist from "../common/ButtonWhitelist";
+import { useCart } from "@/src/hooks/useCart";
 
 function ProductFuturesButtons({ productId, stock }) {
   const { getItemCount } = useCart();

@@ -226,8 +226,5 @@ const createHybridStorageContext = (ContextName) => {
   };
 };
 
-export const { Provider: CartProvider, useHybridStorage: useCart } =
-  createHybridStorageContext("Cart");
-
 export const { Provider: WhitelistProvider, useHybridStorage: useWhitelist } =
   createHybridStorageContext("WhiteList");

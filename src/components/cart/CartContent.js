@@ -2,19 +2,27 @@
 
 import Loader from "../common/Loader";
 import CartSideBarItem from "./CartSideBarItem";
-import { useCart } from "@/src/contexts/HybridStorageFactory";
 import EmptyPage from "../common/EmptyPage";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
-function CartContent() {
-  const { items, isPending, itemsCount } = useCart();
+function CartContent({
+  items,
+  isLoading,
+  totalItems,
+  handleActions,
+  getItemCount,
+}) {
+  if (isLoading) return <Loader />;
 
-  if (isPending) return <Loader />;
-
-  return itemsCount ? (
+  return totalItems ? (
     <ul className="flex flex-col gap-6 overflow-auto lg:gap-8">
-      {items.map((item) => (
-        <CartSideBarItem item={item} key={item.id} />
+      {items?.map((item) => (
+        <CartSideBarItem
+          item={item}
+          handleActions={handleActions}
+          getItemCount={getItemCount}
+          key={item.id}
+        />
       ))}
     </ul>
   ) : (

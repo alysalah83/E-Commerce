@@ -1,20 +1,21 @@
 "use client";
+
 import ButtonIcon from "./ButtonIcon";
 import { IoEyeOutline } from "react-icons/io5";
 import Button from "./Button";
-import { useCart } from "@/src/contexts/HybridStorageFactory";
 import ButtonWhitelist from "./ButtonWhitelist";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import ProductMiniPanel from "../product page/ProductMiniPanel";
+import { useCart } from "@/src/hooks/useCart";
 
 function ProductFuturesBar({ product }) {
   const productId = product.id;
-  const { checkAddedItem, handleActions } = useCart();
+  const { isInCart: checkIsInCart, handleActions } = useCart();
   const [showPanel, setShowPanel] = useState(false);
   const handleTogglePanel = () => setShowPanel((cur) => !cur);
 
-  const isInCart = checkAddedItem(productId);
+  const isInCart = checkIsInCart(productId);
 
   return (
     <>

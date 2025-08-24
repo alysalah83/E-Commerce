@@ -11,6 +11,7 @@ import { Inter } from "next/font/google";
 import AuthProvider from "../contexts/AuthProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import StoreProvider from "../contexts/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,8 +46,8 @@ export default async function RootLayout({ children }) {
           <SpeedInsights />
           <Analytics />
           <QueryProvider>
-            <CartProvider localKey="cart">
-              <WhitelistProvider localKey="whitelist">
+            <WhitelistProvider localKey="whitelist">
+              <StoreProvider>
                 <header>
                   <div className="mx-auto max-w-7xl">
                     <Navigation />
@@ -56,8 +57,8 @@ export default async function RootLayout({ children }) {
                 <footer>
                   <Footer />
                 </footer>
-              </WhitelistProvider>
-            </CartProvider>
+              </StoreProvider>
+            </WhitelistProvider>
           </QueryProvider>
         </AuthProvider>
       </body>

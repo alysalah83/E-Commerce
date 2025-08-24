@@ -21,8 +21,8 @@ function ListWindowTap({ allLinks }) {
     >
       <div
         onClick={handleToggleMenu}
-        onMouseEnter={() => setIsMenuOpen(true)}
-        onMouseLeave={handleCloseMenu}
+        onPointerEnter={() => setIsMenuOpen(true)}
+        onPointerLeave={handleCloseMenu}
         className="flex items-center gap-1"
       >
         <span>Pages</span>

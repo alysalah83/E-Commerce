@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
 import SearchBar from "./SearchBar";
@@ -32,5 +31,4 @@ function Navigation() {
     </>
   );
 }
-
 export default Navigation;

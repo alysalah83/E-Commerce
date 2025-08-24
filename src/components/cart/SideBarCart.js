@@ -1,15 +1,41 @@
 "use client";
-import { useCart } from "@/src/contexts/HybridStorageFactory";
+import { useCart } from "@/src/hooks/useCart";
 import OverLay from "../common/OverLay";
 import CartSideBar from "./CartSideBar";
-import { memo } from "react";
+import { memo, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { togglePanel } from "@/src/store/cartSlice";
 
 function SideBarCart() {
-  const { showPanel, handleTogglePanel } = useCart();
+  const {
+    showPanel,
+    totalPrice,
+    products,
+    isLoading,
+    totalItems,
+    handleActions,
+    getItemCount,
+  } = useCart();
+  const dispatch = useDispatch();
+
+  const handleTogglePanel = useCallback(
+    () => dispatch(togglePanel()),
+    [dispatch],
+  );
+
   return (
     <>
       <OverLay visible={showPanel} handleToggleVisibility={handleTogglePanel} />
-      <CartSideBar visible={showPanel} handleToggleCart={handleTogglePanel} />
+      <CartSideBar
+        items={products}
+        isLoading={isLoading}
+        totalItems={totalItems}
+        visible={showPanel}
+        handleToggleCart={handleTogglePanel}
+        totalPrice={totalPrice}
+        handleActions={handleActions}
+        getItemCount={getItemCount}
+      />
     </>
   );
 }

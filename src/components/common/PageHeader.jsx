@@ -9,7 +9,7 @@ function PageHeader({ heading }) {
   const pathArr = [];
 
   stringPath.forEach((path) => {
-    pathArr.push(`${path[0].toUpperCase()}${path.slice(1)}`);
+    pathArr.push(`${path[0]?.toUpperCase()}${path.slice(1)}`);
   });
 
   return (

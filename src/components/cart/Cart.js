@@ -2,39 +2,39 @@
 
 import Loader from "../common/Loader";
 import CartOrderSummery from "./CartOrderSummery";
-import { useCart } from "@/src/contexts/HybridStorageFactory";
 import EmptyPage from "../common/EmptyPage";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import Table from "../common/table/Table";
+import { useCart } from "@/src/hooks/useCart";
 
 function Cart() {
   const {
-    items,
-    isPending,
-    itemsCount,
-    itemsBalance,
-    getItemCount,
+    products,
+    isLoading,
+    totalItems,
+    totalPrice,
     handleActions,
+    getItemCount,
   } = useCart();
 
-  if (isPending) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
-    <main className={`${itemsCount > 0 ? "bg-gray-100" : "bg-white"}`}>
+    <main className={`${totalItems > 0 ? "bg-gray-100" : "bg-white"}`}>
       <section className="mx-auto max-w-7xl px-6 py-10 md:px-10">
-        {itemsCount > 0 ? (
+        {totalItems > 0 ? (
           <>
             <div className="overflow-x-auto rounded-lg bg-white px-8 py-5 shadow-md">
               <Table
-                items={items}
+                items={products}
                 handleActions={handleActions}
                 getItemCount={getItemCount}
                 withCount={true}
               />
             </div>
             <CartOrderSummery
-              items={items}
-              itemsBalance={itemsBalance}
+              items={products}
+              itemsBalance={totalPrice}
               getItemCount={getItemCount}
             />
           </>
